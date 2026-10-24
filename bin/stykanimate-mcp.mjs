@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // stykanimate-mcp            run the MCP server over stdio (what MCP clients start)
 // stykanimate-mcp install …  register the server with coding agents (see --help)
+// stykanimate-mcp skills …   copy the animation skills into agents' skill folders
 // stykanimate-mcp prepare    download StykAnimate and a browser now instead of on first use
 const [command, ...rest] = process.argv.slice(2);
 
@@ -10,6 +11,9 @@ if (command === 'install') {
 } else if (command === 'remove') {
   const {main} = await import('../src/install.mjs');
   process.exitCode = await main([...rest, '--remove']);
+} else if (command === 'skills') {
+  const {installSkills} = await import('../src/skills.mjs');
+  process.exitCode = await installSkills(rest);
 } else if (command === 'prepare') {
   const {ensureApp} = await import('../src/app.mjs');
   const {launchBrowser} = await import('../src/browser.mjs');
@@ -22,6 +26,7 @@ if (command === 'install') {
   npx -y github:mashhoorahdal/stykanimate-mcp                         run the server (stdio)
   npx -y github:mashhoorahdal/stykanimate-mcp install <agent…|all>     register it with coding agents
   npx -y github:mashhoorahdal/stykanimate-mcp remove <agent…|all>      unregister it
+  npx -y github:mashhoorahdal/stykanimate-mcp skills <claude|agents|all> install the animation skills
   npx -y github:mashhoorahdal/stykanimate-mcp prepare                  download the app and a browser now`);
 } else if (command) {
   console.error(`Unknown command "${command}". Try --help.`);

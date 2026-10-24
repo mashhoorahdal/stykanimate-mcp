@@ -5,7 +5,7 @@
   "license": "GPL-3.0-or-later",
   "type": "module",
   "bin": {"stykanimate-mcp": "bin/stykanimate-mcp.mjs"},
-  "files": ["bin/", "src/", "examples/", "README.md", "LICENSE"],
+  "files": ["bin/", "src/", "skills/", "examples/", "README.md", "LICENSE"],
   "engines": {"node": ">=22"},
   "scripts": {
     "start": "node bin/stykanimate-mcp.mjs",

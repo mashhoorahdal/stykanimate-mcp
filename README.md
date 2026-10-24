@@ -37,6 +37,27 @@ instead of `install` to unregister. Config files are edited in place, keeping th
 
 Any MCP client can also run `npx -y github:mashhoorahdal/stykanimate-mcp` as a stdio server.
 
+### Animation skills
+
+Two skills teach an agent to animate well with these tools:
+
+- **stykanimate-natural-motion**: acting and timing for human-like motion. It covers beat sheets, holds,
+  anticipation, overshoot, overlap, talking, reacting, handing things over, walking and shots for Shorts,
+  plus a review checklist.
+- **stykanimate-physics**: gravity, weight, momentum, balance and contact. It covers jumps, throws,
+  catches, drops, bounces, heavy lifting and falls, using `physics_plan` and `arc`.
+
+Every MCP client gets them as the prompts `natural-motion` and `physics` (in Claude Code:
+`/mcp__stykanimate__natural-motion`). To install them as skills that load automatically:
+
+```sh
+npx -y github:mashhoorahdal/stykanimate-mcp skills all      # ~/.claude/skills and ~/.agents/skills
+npx -y github:mashhoorahdal/stykanimate-mcp skills claude   # Claude Code only (opencode reads it too)
+npx -y github:mashhoorahdal/stykanimate-mcp skills agents   # Codex, opencode and other ~/.agents/skills readers
+```
+
+`--dir <path>` copies them somewhere else; `--remove` uninstalls them.
+
 ## Requirements
 
 - **Node.js 22** or newer.
@@ -54,6 +75,7 @@ time, together with the browser check: `npx -y github:mashhoorahdal/stykanimate-
 | --- | --- |
 | `stykanimate_guide` | How to write a spec: coordinates, the rig, poses, timing, tips and an example |
 | `build_animation` | Spec → animation in the headless editor, optionally saved as `.styk` |
+| `physics_plan` | Gravity-timed keyframes for a jump, toss, drop or bounce, scaled to the figures |
 | `preview_frames` | A contact sheet of chosen frames, drawn by the exporter |
 | `export_video` | MP4, WebM or GIF; presets `shorts`, `youtube`, `tiktok`, `instagram`, `x`, `gif`, `best` |
 | `save_project` | Save as `.styk` |
@@ -68,6 +90,8 @@ easing. Natural motion is built in:
 - `attach` holds a prop in a hand with an app join, so it follows every frame and can be handed over.
 - `bend` and `turn` pose joints relative to their parent bone (forward kinematics).
 - `overshoot` swings past a pose and settles; `still` pauses on a pose before the next move.
+- `arc` moves a figure along a gravity parabola into a keyframe, sampled smoothly while the rest of the
+  scene keeps moving; `physics_plan` picks heights and flight times that match real gravity.
 - `face` turns the eyes to the viewer or sideways; about forty named poses cover talking, reaching,
   knocking, picking up, sitting and more.
 - Voiceover and music files can be placed on the timeline, and the animation stretches to fit them.
