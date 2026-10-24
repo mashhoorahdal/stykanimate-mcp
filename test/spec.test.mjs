@@ -172,3 +172,34 @@ test('still keeps a pose before the move to the next keyframe starts', () => {
   assert.equal(stickmanAt(leave).root_x, 100);
   assert.equal(stickmanAt(next).root_x, 200);
 });
+
+test('arc samples a gravity parabola into the keyframe while other figures keep moving evenly', () => {
+  const {document} = compileSpec({cast, keyframes: [
+    {hold: 8, figures: {ball: {x: 0, y: 500}, bob: {x: 0, y: 300}}},
+    {hold: 4, figures: {ball: {x: 80, y: 500, arc: 100}, bob: {x: 80}}},
+  ]});
+  const samples = document.keyframes.slice(0, 4);
+  assert.deepEqual(samples.map(frame => frame.duration_raw), [2, 2, 2, 2]);
+  assert.ok(samples.every(frame => frame._styk.easing.interpolation === 'linear'));
+  const ball = frame => frame.objects.find(object => object.figure_type_id === 3), bob = frame => stickmanAt(frame);
+  // A circle's root is its bottom: centre y + radius 20.
+  const heights = samples.map(frame => 500 - (ball(frame).root_y - 20));
+  assert.deepEqual(heights.map(Math.round), [0, 75, 100, 75], 'a symmetric arc peaking 100 px up half way');
+  assert.deepEqual(samples.map(frame => ball(frame).root_x), [0, 20, 40, 60], 'even speed across');
+  assert.deepEqual(samples.map(frame => bob(frame).root_x), [0, 20, 40, 60], 'others keep moving through the samples');
+  assert.equal(ball(document.keyframes[4]).root_y - 20, 500, 'it lands on the keyframe');
+});
+
+test('physics plans use gravity scaled to the figures and land where asked', async () => {
+  const {flightFrames, jump, bounce, toss} = await import('../src/physics.mjs');
+  assert.ok(flightFrames(120, 120) > flightFrames(30, 30), 'higher stays up longer');
+  assert.equal(flightFrames(120, 120), 2 * flightFrames(30, 30), 'four times the height, twice the time');
+  assert.ok(flightFrames(60, 60, {scale: 2.4}) < flightFrames(60, 60, {scale: 1.2}), 'the same pixels are a smaller real jump for a bigger figure');
+  const leap = jump({figure: 'bob', x: 100, ground: 700, height: 80, distance: 60});
+  const {document} = compileSpec({cast, keyframes: [{figures: {bob: {x: 100, ground: 700, pose: 'stand'}}}, ...leap.keyframes]});
+  const landing = document.keyframes.filter(frame => stickmanAt(frame)?.root_x === 160);
+  assert.ok(landing.length, 'it lands at x + distance');
+  const hops = bounce({figure: 'ball', x: 0, y: 200, rest: 700}).keyframes.map(key => key.figures.ball.arc).filter(Boolean);
+  assert.ok(hops.every((height, i) => i === 0 || height < hops[i - 1]), 'each bounce is lower');
+  assert.equal(toss({figure: 'ball', from: {x: 0, y: 500}, to: {x: 200, y: 500}, peak: 60}).keyframes[0].figures.ball.attach, null, 'a toss lets go');
+});

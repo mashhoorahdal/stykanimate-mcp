@@ -175,7 +175,7 @@ export function compileSpec(spec, external = new Map()) {
   const resolve = (key, index) => {
     const hold = key.hold ?? 12;
     if (!Number.isInteger(hold) || hold < 1 || hold > 65535) throw new Error(`keyframes[${index}].hold must be a whole number of frames from 1 to 65535`);
-    const overshoot = new Map();
+    const overshoot = new Map(), arcs = new Map();
     for (const [id, change] of Object.entries(key.figures ?? {})) {
       const member = members.get(id);
       if (!member) throw new Error(`keyframes[${index}] names "${id}", which is not in the cast`);
@@ -186,17 +186,21 @@ export function compileSpec(spec, external = new Map()) {
         if (member.kind !== 'stickman') throw new Error(`keyframes[${index}].figures.${id}.overshoot applies to stickmen`);
         overshoot.set(id, change.overshoot);
       }
+      if (change.arc !== undefined) {
+        if (!Number.isFinite(change.arc) || change.arc < 0) throw new Error(`keyframes[${index}].figures.${id}.arc must be a height in pixels, 0 or more`);
+        arcs.set(id, change.arc);
+      }
     }
     if (key.background) background = key.background;
     if (key.camera) camera = {x: width / 2, y: height / 2, zoom: 1, rotate: 0, ...camera, ...key.camera};
     const ease = key.ease ?? spec.ease ?? 'auto';
     if (!EASINGS[ease]) throw new Error(`keyframes[${index}].ease must be one of ${Object.keys(EASINGS).join(', ')}`);
-    const record = {index, hold, ease, background, camera, overshoot, settle: key.settle,
+    const record = {index, hold, ease, background, camera, overshoot, arcs, settle: key.settle,
       states: new Map([...visible].map(id => [id, states.get(id)]))};
     const still = key.still ?? 0;
     if (!Number.isInteger(still) || still < 0 || still > 65535) throw new Error(`keyframes[${index}].still must be a whole number of frames`);
     // Staying still is a copy of the pose that the move to the next keyframe starts from.
-    if (still) records.push({...record, hold: still}, {...record, overshoot: new Map(), settle: undefined});
+    if (still) records.push({...record, hold: still}, {...record, overshoot: new Map(), arcs: new Map(), settle: undefined});
     else records.push(record);
   };
   spec.keyframes.forEach((key, index) => {
@@ -212,7 +216,7 @@ export function compileSpec(spec, external = new Map()) {
     if (!backgrounds.has(argb)) backgrounds.set(argb, {background_id: backgrounds.size + 1, kind: 2, color: argb, name: `Color ${color}`});
     return backgrounds.get(argb).background_id;
   };
-  const frame = (record, stateMap, cameraState, hold) => {
+  const frame = (record, stateMap, cameraState, hold, ease = record.ease) => {
     const placed = cast.filter(member => stateMap.has(member.id)).map(member =>
       ({member, ...placeObject(member, figures.get(member.id), uids.get(member.id), stateMap.get(member.id), anchors.get(member.id))}));
     const slots = new Map(placed.map((entry, slot) => [entry.member.id, slot]));
@@ -229,7 +233,7 @@ export function compileSpec(spec, external = new Map()) {
       ({x: object.root_x, y: object.root_y} = target.handles.get(handle));
     }
     const result = createFrame(placed.map(entry => entry.object), hold);
-    result._styk = {easing: structuredClone(EASINGS[record.ease])};
+    result._styk = {easing: structuredClone(EASINGS[ease])};
     result.background_id = backgroundId(record.background);
     if (cameraState) result.camera = {is_default: false, x: cameraState.x - width / 2, y: cameraState.y - height / 2,
       scale: 1 / cameraState.zoom, angle_rad: radians(cameraState.rotate)};
@@ -237,10 +241,34 @@ export function compileSpec(spec, external = new Map()) {
   };
   const frames = [];
   let ticks = 0;
+  // The move from `record` to `next`, starting at fraction `from` of it. A figure arriving with an arc follows a
+  // parabola (even speed across, gravity up and down) sampled every two frames; the rest move evenly with it.
+  const transition = (record, next, states, cameraState, from, hold) => {
+    if (!next?.arcs.size || hold < 2) { frames.push(frame(record, states, cameraState, hold)); return; }
+    const steps = Math.max(1, Math.round(hold / 2));
+    let used = 0;
+    for (let step = 0; step < steps; step++) {
+      const t = from + (1 - from) * step / steps, sampled = new Map();
+      for (const [id, state] of (step ? record.states : states)) sampled.set(id, step ? lerpState(state, next.states.get(id), t) : state);
+      for (const [id, peak] of next.arcs) {
+        const start = record.states.get(id), end = next.states.get(id);
+        if (!start || !end) throw new Error(`keyframes[${next.index}]: "${id}" needs a position in the keyframe before its arc`);
+        const key = end.ground !== undefined ? 'ground' : 'y';
+        if (!Number.isFinite(start[key])) throw new Error(`keyframes[${next.index}]: "${id}" arcs on ${key}, so it needs ${key} in the keyframe before too`);
+        // y(t) = apex + (s + r)²(t − tApex)²: through both ends, `peak` pixels above the higher one.
+        const apex = Math.min(start[key], end[key]) - peak, s = Math.sqrt(start[key] - apex), r = Math.sqrt(end[key] - apex);
+        const tApex = s + r ? s / (s + r) : 0;
+        sampled.set(id, {...lerpState(start, end, t), [key]: apex + (s + r) ** 2 * (t - tApex) ** 2});
+      }
+      const length = step === steps - 1 ? hold - used : Math.round(hold / steps);
+      used += length;
+      frames.push(frame(record, sampled, step ? lerpCamera(record.camera, next.camera, t) : cameraState, length, 'linear'));
+    }
+  };
   records.forEach((record, i) => {
     ticks += record.hold;
     const previous = records[i - 1], next = records[i + 1], settle = Math.min(record.settle ?? 4, record.hold - 1);
-    if (!record.overshoot.size || settle < 1) { frames.push(frame(record, record.states, record.camera, record.hold)); return; }
+    if (!record.overshoot.size || settle < 1) { transition(record, next, record.states, record.camera, 0, record.hold); return; }
     const passed = new Map(record.states);
     for (const [id, amount] of record.overshoot) {
       const target = record.states.get(id), before = previous?.states.get(id);
@@ -250,7 +278,7 @@ export function compileSpec(spec, external = new Map()) {
     }
     frames.push(frame(record, passed, record.camera, settle));
     const t = settle / record.hold, settled = new Map([...record.states].map(([id, state]) => [id, lerpState(state, next?.states.get(id), next ? t : 0)]));
-    frames.push(frame(record, settled, next ? lerpCamera(record.camera, next.camera, t) : record.camera, record.hold - settle));
+    transition(record, next, settled, next ? lerpCamera(record.camera, next.camera, t) : record.camera, t, record.hold - settle);
   });
   // The last keyframe holds for its own length: a closing copy marks where it ends.
   const closing = structuredClone(frames.at(-1));

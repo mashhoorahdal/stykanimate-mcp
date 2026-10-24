@@ -9,6 +9,8 @@ import {ensureApp} from './app.mjs';
 import {EASINGS} from './easing.mjs';
 import {HANDLES, JOINTS, POSES} from './rig.mjs';
 import {GUIDE} from './guide.mjs';
+import {PHYSICS} from './physics.mjs';
+import {registerSkillPrompts} from './skills.mjs';
 
 let runtime = null, session = null;
 /** The editor session and builder, loaded once the app is available. */
@@ -43,6 +45,7 @@ const placement = z.object({
   lean: z.number().optional().describe('Stickman only: lean the upper body forward by this many degrees (negative leans back)'),
   face: z.enum(['front', 'side']).optional().describe('Stickman with eyes: look at the viewer (two eyes) or sideways (one eye, toward the facing side)'),
   overshoot: z.number().min(0).max(1).optional().describe('Stickman only: swing this fraction past the new pose, then settle back (0.15–0.3 feels natural)'),
+  arc: z.number().min(0).optional().describe('Arrive here along a gravity parabola peaking this many px above the higher end (0 = a fall). Use physics_plan for the matching hold'),
   attach: z.object({to: z.string().describe('Cast id to hold on to'), at: z.enum(Object.keys(HANDLES)).optional().describe('Stickman handle; default rightHand')})
     .nullable().optional().describe('Hold this figure at another figure\'s hand (or other handle) so it follows exactly; null lets go (then give x/y)'),
   flip: z.boolean().optional().describe('Face left (library poses face right)'),
@@ -104,6 +107,25 @@ tool('stykanimate_guide', {
   description: 'How to write an animation spec for build_animation: coordinates, the stickman rig, the pose library, timing and a worked example. Read this before the first build.',
 }, async () => text(GUIDE));
 
+const point = z.object({x: z.number(), y: z.number()});
+tool('physics_plan', {
+  description: 'Physically timed keyframes to paste into a spec: jump (crouch, take off, arc, land, recover), toss (a prop leaves a hand and flies to a point), drop (a fall from rest) and bounce (a ball losing energy each bounce). Gravity is scaled to the figures, so air time matches the height. Merge other figures\' changes into the returned keyframes rather than adding keyframes between them.',
+  inputSchema: {
+    kind: z.enum(Object.keys(PHYSICS)), figure: z.string().describe('Cast id that moves'),
+    x: z.number().optional().describe('jump/drop/bounce: starting x'), ground: z.number().optional().describe('jump: the floor y the stickman stands on'),
+    y: z.number().optional().describe('bounce: starting centre y'), rest: z.number().optional().describe('bounce: centre y when touching the floor (floor top − radius)'),
+    height: z.number().positive().optional().describe('jump: how high the feet rise, px (40–120 for a person)'),
+    distance: z.number().optional().describe('jump: horizontal travel, px'),
+    from: z.union([point, z.number()]).optional().describe('toss: {x,y} release point; drop: starting y'),
+    to: z.union([point, z.number()]).optional().describe('toss: {x,y} landing point; drop: landing y'),
+    peak: z.number().min(0).optional().describe('toss: px above the higher end'), spin: z.number().optional().describe('toss: degrees of rotation in flight'),
+    restitution: z.number().optional().describe('bounce: 0.5–0.7 ball, 0.2 bag, 0.8 rubber'), bounces: z.number().int().optional(),
+    drift: z.number().optional().describe('bounce: px travelled sideways per bounce'),
+    scale: z.number().positive().optional().describe('Scale of the stickmen in the scene (default 1.2); sets the strength of gravity'),
+    fps: z.number().int().optional(), flip: z.boolean().optional(),
+  },
+}, async ({kind, ...options}) => text(PHYSICS[kind](options)));
+
 tool('build_animation', {
   description: 'Build a StykAnimate animation from a spec (cast + keyframes) and open it in the headless editor, replacing the open one. Follow with preview_frames to check it, then export_video and save_project. See stykanimate_guide.',
   inputSchema: {spec, saveProject: z.string().optional().describe('Also save the project to this .styk path')},
@@ -152,6 +174,8 @@ tool('save_project', {
   description: 'Save the open animation as a StykAnimate .styk project, which opens in the app for hand editing.',
   inputSchema: {out: z.string().describe('Output path ending in .styk')},
 }, async ({out}) => text(await (await editor()).session.save(outputPath(out))));
+
+await registerSkillPrompts(server);
 
 const shutdown = async () => { await session?.close(); process.exit(0); };
 process.stdin.on('close', shutdown);

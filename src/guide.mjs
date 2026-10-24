@@ -45,6 +45,9 @@ that names it; {"hide": true} removes it.
   Handles: ${Object.keys(HANDLES).join(', ')}. A tall rect hangs from its top centre (a bag); a circle sits on
   the handle (a ball); a line starts there (a stick). {"attach": null, "x": .., "y": ..} puts it down.
   Hide or detach a prop before its holder is hidden.
+- arc: arrive at this keyframe along a gravity parabola peaking this many px above the higher end (0 = a fall).
+  The keyframe before is the take-off and its hold is the flight time; physics_plan computes both for jumps,
+  tosses, drops and bounces. Works on y (props) and ground (a jumping stickman).
 - camera (per keyframe, carries over): {x, y, zoom, rotate}; x/y is the canvas point at the centre of the shot.
   zoom 1.3 = closer. Tweens like figures. Reset with {"x":270,"y":480,"zoom":1}.
 - background: a hex colour from this keyframe on.
@@ -61,6 +64,8 @@ the same keyframe's "figures" and apply at the first step.
 ${Object.keys(POSES).join(', ')}
 
 ## Making it feel natural
+The prompts natural-motion and physics (the skills stykanimate-natural-motion and stykanimate-physics) hold
+the full guidance; the short version:
 - Anticipate: before a big action, a small opposite move (crouch before jump, lean back before a throw), 4–6 frames.
 - Arrive with overshoot 0.2 on big gestures; never on tiny ones.
 - Let key poses read: "still" 8–14 frames on important poses, and before a fade or a cut. Keep tiny moves
