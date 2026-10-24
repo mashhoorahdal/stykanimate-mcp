@@ -1,0 +1,1209 @@
+{
+ "title": "Grocery Run",
+ "width": 540,
+ "height": 960,
+ "fps": 24,
+ "background": "#cfe9ff",
+ "cast": [
+  {
+   "id": "grass",
+   "kind": "rect",
+   "color": "#8fd16a",
+   "width": 540,
+   "height": 200
+  },
+  {
+   "id": "sun",
+   "kind": "circle",
+   "color": "#ffd43b",
+   "radius": 45
+  },
+  {
+   "id": "h_chimney",
+   "kind": "rect",
+   "color": "#7a4b32",
+   "width": 30,
+   "height": 70
+  },
+  {
+   "id": "h_roof",
+   "kind": "rect",
+   "color": "#c92a2a",
+   "width": 200,
+   "height": 200
+  },
+  {
+   "id": "h_body",
+   "kind": "rect",
+   "color": "#ffe8cc",
+   "width": 240,
+   "height": 300
+  },
+  {
+   "id": "h_window",
+   "kind": "rect",
+   "color": "#a5d8ff",
+   "width": 60,
+   "height": 50
+  },
+  {
+   "id": "h_door",
+   "kind": "rect",
+   "color": "#8d5a3b",
+   "width": 64,
+   "height": 130
+  },
+  {
+   "id": "h_knob",
+   "kind": "circle",
+   "color": "#ffd43b",
+   "radius": 5
+  },
+  {
+   "id": "s_body",
+   "kind": "rect",
+   "color": "#fff3bf",
+   "width": 280,
+   "height": 330
+  },
+  {
+   "id": "s_sign",
+   "kind": "rect",
+   "color": "#2b8a3e",
+   "width": 300,
+   "height": 50
+  },
+  {
+   "id": "s_awning",
+   "kind": "rect",
+   "color": "#e03131",
+   "width": 300,
+   "height": 36
+  },
+  {
+   "id": "s_stripe0",
+   "kind": "rect",
+   "color": "#ffffff",
+   "width": 30,
+   "height": 36
+  },
+  {
+   "id": "s_stripe1",
+   "kind": "rect",
+   "color": "#ffffff",
+   "width": 30,
+   "height": 36
+  },
+  {
+   "id": "s_stripe2",
+   "kind": "rect",
+   "color": "#ffffff",
+   "width": 30,
+   "height": 36
+  },
+  {
+   "id": "s_stripe3",
+   "kind": "rect",
+   "color": "#ffffff",
+   "width": 30,
+   "height": 36
+  },
+  {
+   "id": "s_window",
+   "kind": "rect",
+   "color": "#a5d8ff",
+   "width": 120,
+   "height": 90
+  },
+  {
+   "id": "s_apple0",
+   "kind": "circle",
+   "color": "#e03131",
+   "radius": 11
+  },
+  {
+   "id": "s_apple1",
+   "kind": "circle",
+   "color": "#2f9e44",
+   "radius": 11
+  },
+  {
+   "id": "s_apple2",
+   "kind": "circle",
+   "color": "#fd7e14",
+   "radius": 11
+  },
+  {
+   "id": "s_door",
+   "kind": "rect",
+   "color": "#228be6",
+   "width": 64,
+   "height": 130
+  },
+  {
+   "id": "s_name",
+   "kind": "text",
+   "text": "GROCERY",
+   "fontSize": 32,
+   "bold": true,
+   "color": "#ffffff"
+  },
+  {
+   "id": "i_floor",
+   "kind": "rect",
+   "color": "#d9c3a3",
+   "width": 540,
+   "height": 200
+  },
+  {
+   "id": "i_shelf0",
+   "kind": "rect",
+   "color": "#8d5a3b",
+   "width": 300,
+   "height": 12
+  },
+  {
+   "id": "i_shelf1",
+   "kind": "rect",
+   "color": "#8d5a3b",
+   "width": 300,
+   "height": 12
+  },
+  {
+   "id": "i_item0",
+   "kind": "circle",
+   "color": "#e03131",
+   "radius": 16
+  },
+  {
+   "id": "i_item1",
+   "kind": "circle",
+   "color": "#fab005",
+   "radius": 16
+  },
+  {
+   "id": "i_item2",
+   "kind": "circle",
+   "color": "#2f9e44",
+   "radius": 16
+  },
+  {
+   "id": "i_item3",
+   "kind": "circle",
+   "color": "#e03131",
+   "radius": 16
+  },
+  {
+   "id": "i_item4",
+   "kind": "circle",
+   "color": "#fd7e14",
+   "radius": 16
+  },
+  {
+   "id": "i_milk",
+   "kind": "rect",
+   "color": "#74c0fc",
+   "width": 26,
+   "height": 44
+  },
+  {
+   "id": "i_bread",
+   "kind": "rect",
+   "color": "#d9a066",
+   "width": 56,
+   "height": 30
+  },
+  {
+   "id": "keeper",
+   "kind": "stickman",
+   "color": "#2b8a3e",
+   "headFilled": true,
+   "eyes": true
+  },
+  {
+   "id": "i_counter",
+   "kind": "rect",
+   "color": "#8d5a3b",
+   "width": 230,
+   "height": 150
+  },
+  {
+   "id": "i_counter_top",
+   "kind": "rect",
+   "color": "#5c3d2e",
+   "width": 250,
+   "height": 14
+  },
+  {
+   "id": "leaf",
+   "kind": "circle",
+   "color": "#40c057",
+   "radius": 14
+  },
+  {
+   "id": "bag",
+   "kind": "rect",
+   "color": "#e9c79a",
+   "width": 44,
+   "height": 56
+  },
+  {
+   "id": "coin",
+   "kind": "circle",
+   "color": "#fcc419",
+   "radius": 9
+  },
+  {
+   "id": "man",
+   "kind": "stickman",
+   "color": "#212529",
+   "thickness": 1.1,
+   "eyes": true
+  },
+  {
+   "id": "cap_milk",
+   "kind": "text",
+   "text": "Out of groceries...",
+   "fontSize": 42,
+   "bold": true,
+   "color": "#ffffff",
+   "outline": 5,
+   "outlineColor": "#212529"
+  },
+  {
+   "id": "cap_go",
+   "kind": "text",
+   "text": "Time to go shopping!",
+   "fontSize": 42,
+   "bold": true,
+   "color": "#ffffff",
+   "outline": 5,
+   "outlineColor": "#212529"
+  },
+  {
+   "id": "cap_order",
+   "kind": "text",
+   "text": "Apples, bread\nand milk, please!",
+   "fontSize": 42,
+   "bold": true,
+   "color": "#ffffff",
+   "outline": 5,
+   "outlineColor": "#212529"
+  },
+  {
+   "id": "cap_price",
+   "kind": "text",
+   "text": "That's $12.",
+   "fontSize": 42,
+   "bold": true,
+   "color": "#ffffff",
+   "outline": 5,
+   "outlineColor": "#212529"
+  },
+  {
+   "id": "cap_thanks",
+   "kind": "text",
+   "text": "Thank you!",
+   "fontSize": 42,
+   "bold": true,
+   "color": "#ffffff",
+   "outline": 5,
+   "outlineColor": "#212529"
+  },
+  {
+   "id": "cap_home",
+   "kind": "text",
+   "text": "Home sweet home!",
+   "fontSize": 42,
+   "bold": true,
+   "color": "#ffffff",
+   "outline": 5,
+   "outlineColor": "#212529"
+  }
+ ],
+ "keyframes": [
+  {
+   "hold": 16,
+   "figures": {
+    "grass": {
+     "x": 270,
+     "y": 860
+    },
+    "sun": {
+     "x": 455,
+     "y": 150
+    },
+    "h_chimney": {
+     "x": 95,
+     "y": 370
+    },
+    "h_roof": {
+     "x": 165,
+     "y": 460,
+     "rotate": 45
+    },
+    "h_body": {
+     "x": 165,
+     "y": 610
+    },
+    "h_window": {
+     "x": 95,
+     "y": 560
+    },
+    "h_door": {
+     "x": 215,
+     "y": 695
+    },
+    "h_knob": {
+     "x": 233,
+     "y": 700
+    },
+    "man": {
+     "x": 205,
+     "ground": 760,
+     "pose": "stand",
+     "scale": 1.2,
+     "opacity": 1,
+     "flip": false,
+     "face": "front"
+    }
+   },
+   "ease": "constant",
+   "camera": {
+    "x": 270,
+    "y": 480,
+    "zoom": 1
+   },
+   "background": "#cfe9ff"
+  },
+  {
+   "hold": 12,
+   "figures": {
+    "man": {
+     "pose": "look_down"
+    },
+    "cap_milk": {
+     "x": 270,
+     "y": 190
+    }
+   },
+   "still": 8
+  },
+  {
+   "hold": 12,
+   "figures": {
+    "man": {
+     "pose": "sad"
+    }
+   },
+   "still": 10
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "man": {
+     "pose": "think",
+     "face": "side"
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "point",
+     "overshoot": 0.25
+    },
+    "cap_milk": {
+     "hide": true
+    },
+    "cap_go": {
+     "x": 270,
+     "y": 190
+    }
+   },
+   "still": 16
+  },
+  {
+   "walk": {
+    "figure": "man",
+    "to": 640,
+    "stop": false
+   },
+   "figures": {
+    "cap_go": {
+     "hide": true
+    }
+   }
+  },
+  {
+   "hold": 4,
+   "figures": {
+    "h_chimney": {
+     "hide": true
+    },
+    "h_roof": {
+     "hide": true
+    },
+    "h_body": {
+     "hide": true
+    },
+    "h_window": {
+     "hide": true
+    },
+    "h_door": {
+     "hide": true
+    },
+    "h_knob": {
+     "hide": true
+    },
+    "cap_go": {
+     "hide": true
+    },
+    "grass": {
+     "x": 270,
+     "y": 860
+    },
+    "sun": {
+     "x": 90,
+     "y": 150
+    },
+    "s_body": {
+     "x": 385,
+     "y": 595
+    },
+    "s_sign": {
+     "x": 385,
+     "y": 455
+    },
+    "s_name": {
+     "x": 385,
+     "y": 455
+    },
+    "s_awning": {
+     "x": 385,
+     "y": 498
+    },
+    "s_stripe0": {
+     "x": 265,
+     "y": 498
+    },
+    "s_stripe1": {
+     "x": 345,
+     "y": 498
+    },
+    "s_stripe2": {
+     "x": 425,
+     "y": 498
+    },
+    "s_stripe3": {
+     "x": 505,
+     "y": 498
+    },
+    "s_window": {
+     "x": 440,
+     "y": 640
+    },
+    "s_apple0": {
+     "x": 415,
+     "y": 670
+    },
+    "s_apple1": {
+     "x": 440,
+     "y": 670
+    },
+    "s_apple2": {
+     "x": 465,
+     "y": 670
+    },
+    "s_door": {
+     "x": 300,
+     "y": 695
+    },
+    "man": {
+     "x": -70,
+     "ground": 760,
+     "pose": "walk_contact_a",
+     "scale": 1.2,
+     "opacity": 1,
+     "flip": false,
+     "face": "side"
+    }
+   },
+   "ease": "constant",
+   "camera": {
+    "x": 270,
+    "y": 480,
+    "zoom": 1
+   },
+   "background": "#cfe9ff"
+  },
+  {
+   "walk": {
+    "figure": "man",
+    "to": 300
+   },
+   "hold": 6
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "look_up",
+     "face": "front"
+    }
+   },
+   "still": 10
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "stand",
+     "face": "side"
+    }
+   },
+   "still": 4
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "opacity": 0
+    }
+   }
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "man": {
+     "hide": true
+    }
+   }
+  },
+  {
+   "hold": 4,
+   "figures": {
+    "grass": {
+     "hide": true
+    },
+    "sun": {
+     "hide": true
+    },
+    "s_body": {
+     "hide": true
+    },
+    "s_sign": {
+     "hide": true
+    },
+    "s_name": {
+     "hide": true
+    },
+    "s_awning": {
+     "hide": true
+    },
+    "s_stripe0": {
+     "hide": true
+    },
+    "s_stripe1": {
+     "hide": true
+    },
+    "s_stripe2": {
+     "hide": true
+    },
+    "s_stripe3": {
+     "hide": true
+    },
+    "s_window": {
+     "hide": true
+    },
+    "s_apple0": {
+     "hide": true
+    },
+    "s_apple1": {
+     "hide": true
+    },
+    "s_apple2": {
+     "hide": true
+    },
+    "s_door": {
+     "hide": true
+    },
+    "i_floor": {
+     "x": 270,
+     "y": 860
+    },
+    "i_shelf0": {
+     "x": 370,
+     "y": 330
+    },
+    "i_shelf1": {
+     "x": 370,
+     "y": 450
+    },
+    "i_item0": {
+     "x": 260,
+     "y": 308
+    },
+    "i_item1": {
+     "x": 305,
+     "y": 308
+    },
+    "i_item2": {
+     "x": 350,
+     "y": 308
+    },
+    "i_item3": {
+     "x": 395,
+     "y": 308
+    },
+    "i_item4": {
+     "x": 440,
+     "y": 308
+    },
+    "i_milk": {
+     "x": 270,
+     "y": 422
+    },
+    "i_bread": {
+     "x": 360,
+     "y": 429
+    },
+    "keeper": {
+     "x": 440,
+     "ground": 760,
+     "pose": "stand",
+     "flip": true,
+     "scale": 1.2,
+     "face": "front"
+    },
+    "i_counter": {
+     "x": 415,
+     "y": 685
+    },
+    "i_counter_top": {
+     "x": 415,
+     "y": 610
+    },
+    "man": {
+     "x": -70,
+     "ground": 760,
+     "pose": "walk_contact_a",
+     "scale": 1.2,
+     "opacity": 1,
+     "flip": false,
+     "face": "side"
+    }
+   },
+   "ease": "constant",
+   "camera": {
+    "x": 270,
+    "y": 480,
+    "zoom": 1
+   },
+   "background": "#fff4e0"
+  },
+  {
+   "walk": {
+    "figure": "man",
+    "to": 225
+   },
+   "hold": 6,
+   "figures": {
+    "keeper": {
+     "pose": "wave_a",
+     "overshoot": 0.2
+    }
+   }
+  },
+  {
+   "hold": 6,
+   "figures": {
+    "keeper": {
+     "pose": "wave_b"
+    },
+    "man": {
+     "pose": "wave_a",
+     "face": "side"
+    }
+   }
+  },
+  {
+   "hold": 6,
+   "figures": {
+    "keeper": {
+     "pose": "wave_a"
+    },
+    "man": {
+     "pose": "wave_b"
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "keeper": {
+     "pose": "stand",
+     "face": "side"
+    },
+    "man": {
+     "pose": "stand"
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "talk_a"
+    },
+    "cap_order": {
+     "x": 320,
+     "y": 270
+    }
+   },
+   "camera": {
+    "x": 320,
+    "y": 560,
+    "zoom": 1.3
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "talk_b"
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "talk_a"
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "point",
+     "joints": {
+      "rightUpperArm": -25,
+      "rightForearm": -30
+     }
+    }
+   },
+   "still": 8
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "man": {
+     "pose": "stand"
+    },
+    "keeper": {
+     "pose": "nod"
+    },
+    "cap_order": {
+     "hide": true
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "keeper": {
+     "pose": "stand",
+     "flip": false
+    }
+   }
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "keeper": {
+     "pose": "reach",
+     "overshoot": 0.15
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "keeper": {
+     "pose": "stand"
+    },
+    "bag": {
+     "attach": {
+      "to": "keeper",
+      "at": "rightHand"
+     },
+     "opacity": 1
+    },
+    "leaf": {
+     "attach": {
+      "to": "keeper",
+      "at": "rightHand"
+     },
+     "opacity": 1
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "keeper": {
+     "pose": "hold_out",
+     "flip": true,
+     "face": "front",
+     "overshoot": 0.2
+    },
+    "cap_price": {
+     "x": 320,
+     "y": 270
+    }
+   },
+   "still": 10
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "man": {
+     "pose": "hold_out",
+     "joints": {
+      "leftUpperArm": 95,
+      "leftForearm": 92
+     }
+    },
+    "coin": {
+     "attach": {
+      "to": "man",
+      "at": "rightHand"
+     }
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "coin": {
+     "attach": {
+      "to": "keeper",
+      "at": "leftHand"
+     }
+    },
+    "keeper": {
+     "pose": "hold_out",
+     "joints": {
+      "leftUpperArm": 20,
+      "leftForearm": 0
+     }
+    }
+   }
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "coin": {
+     "hide": true
+    },
+    "bag": {
+     "attach": {
+      "to": "man",
+      "at": "rightHand"
+     },
+     "opacity": 1
+    },
+    "leaf": {
+     "attach": {
+      "to": "man",
+      "at": "rightHand"
+     },
+     "opacity": 1
+    },
+    "cap_price": {
+     "hide": true
+    }
+   },
+   "camera": {
+    "x": 270,
+    "y": 480,
+    "zoom": 1
+   }
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "man": {
+     "pose": "stand",
+     "joints": {
+      "rightUpperArm": 80,
+      "rightForearm": 88
+     },
+     "overshoot": 0.15
+    },
+    "keeper": {
+     "pose": "wave_a",
+     "overshoot": 0.2
+    },
+    "cap_thanks": {
+     "x": 270,
+     "y": 190
+    }
+   }
+  },
+  {
+   "hold": 6,
+   "figures": {
+    "keeper": {
+     "pose": "wave_b"
+    },
+    "man": {
+     "pose": "nod",
+     "joints": {
+      "rightUpperArm": 80,
+      "rightForearm": 88
+     },
+     "face": "front"
+    }
+   }
+  },
+  {
+   "hold": 6,
+   "figures": {
+    "keeper": {
+     "pose": "wave_a"
+    },
+    "man": {
+     "pose": "stand",
+     "joints": {
+      "rightUpperArm": 80,
+      "rightForearm": 88
+     }
+    }
+   }
+  },
+  {
+   "walk": {
+    "figure": "man",
+    "to": -90,
+    "joints": {
+     "rightUpperArm": 80,
+     "rightForearm": 88
+    },
+    "stop": false
+   },
+   "figures": {
+    "keeper": {
+     "pose": "stand"
+    },
+    "cap_thanks": {
+     "hide": true
+    }
+   }
+  },
+  {
+   "hold": 4,
+   "figures": {
+    "i_floor": {
+     "hide": true
+    },
+    "i_shelf0": {
+     "hide": true
+    },
+    "i_shelf1": {
+     "hide": true
+    },
+    "i_item0": {
+     "hide": true
+    },
+    "i_item1": {
+     "hide": true
+    },
+    "i_item2": {
+     "hide": true
+    },
+    "i_item3": {
+     "hide": true
+    },
+    "i_item4": {
+     "hide": true
+    },
+    "i_milk": {
+     "hide": true
+    },
+    "i_bread": {
+     "hide": true
+    },
+    "keeper": {
+     "hide": true
+    },
+    "i_counter": {
+     "hide": true
+    },
+    "i_counter_top": {
+     "hide": true
+    },
+    "cap_thanks": {
+     "hide": true
+    },
+    "grass": {
+     "x": 270,
+     "y": 860
+    },
+    "sun": {
+     "x": 455,
+     "y": 150
+    },
+    "h_chimney": {
+     "x": 95,
+     "y": 370
+    },
+    "h_roof": {
+     "x": 165,
+     "y": 460,
+     "rotate": 45
+    },
+    "h_body": {
+     "x": 165,
+     "y": 610
+    },
+    "h_window": {
+     "x": 95,
+     "y": 560
+    },
+    "h_door": {
+     "x": 215,
+     "y": 695
+    },
+    "h_knob": {
+     "x": 233,
+     "y": 700
+    },
+    "man": {
+     "x": 620,
+     "ground": 760,
+     "pose": "walk_contact_a",
+     "scale": 1.2,
+     "opacity": 1,
+     "flip": true,
+     "face": "side",
+     "joints": {
+      "rightUpperArm": 80,
+      "rightForearm": 88
+     }
+    },
+    "bag": {
+     "attach": {
+      "to": "man",
+      "at": "rightHand"
+     },
+     "opacity": 1
+    },
+    "leaf": {
+     "attach": {
+      "to": "man",
+      "at": "rightHand"
+     },
+     "opacity": 1
+    }
+   },
+   "ease": "constant",
+   "camera": {
+    "x": 270,
+    "y": 480,
+    "zoom": 1
+   },
+   "background": "#cfe9ff"
+  },
+  {
+   "walk": {
+    "figure": "man",
+    "to": 215,
+    "joints": {
+     "rightUpperArm": 80,
+     "rightForearm": 88
+    }
+   },
+   "hold": 8
+  },
+  {
+   "hold": 8,
+   "figures": {
+    "man": {
+     "pose": "stand",
+     "joints": {
+      "rightUpperArm": 80,
+      "rightForearm": 88
+     },
+     "face": "front"
+    }
+   }
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "man": {
+     "pose": "arms_up",
+     "joints": {
+      "rightUpperArm": 80,
+      "rightForearm": 88
+     },
+     "overshoot": 0.25
+    },
+    "cap_home": {
+     "x": 240,
+     "y": 270
+    }
+   },
+   "ease": "ease-out",
+   "still": 26,
+   "camera": {
+    "x": 240,
+    "y": 560,
+    "zoom": 1.25
+   }
+  },
+  {
+   "hold": 10,
+   "figures": {
+    "man": {
+     "pose": "stand",
+     "joints": {
+      "rightUpperArm": 80,
+      "rightForearm": 88
+     },
+     "face": "side",
+     "opacity": 0
+    },
+    "bag": {
+     "opacity": 0
+    },
+    "leaf": {
+     "opacity": 0
+    }
+   }
+  },
+  {
+   "hold": 22,
+   "figures": {
+    "bag": {
+     "hide": true
+    },
+    "leaf": {
+     "hide": true
+    },
+    "man": {
+     "hide": true
+    }
+   },
+   "camera": {
+    "x": 270,
+    "y": 480,
+    "zoom": 1
+   }
+  }
+ ]
+}

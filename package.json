@@ -1,0 +1,23 @@
+{
+  "name": "stykanimate-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that builds StykAnimate stick-figure animations from a scene spec, previews frames and exports videos such as YouTube Shorts.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "bin": {"stykanimate-mcp": "bin/stykanimate-mcp.mjs"},
+  "files": ["bin/", "src/", "examples/", "README.md", "LICENSE"],
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "start": "node bin/stykanimate-mcp.mjs",
+    "test": "node --test test/*.test.mjs",
+    "smoke": "node test/smoke.mjs",
+    "test:mcp": "node test/mcp-client.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "playwright": "1.63.0",
+    "zod": "4.6.7"
+  },
+  "repository": {"type": "git", "url": "git+https://github.com/mashhoorahdal/stykanimate-mcp.git"},
+  "keywords": ["mcp", "model-context-protocol", "animation", "stick-figure", "stykanimate", "pivot", "youtube-shorts"]
+}
